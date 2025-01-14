@@ -1,0 +1,79 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+    "name": "Typescript-Node devcontainer",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20",
+  
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {},
+  
+    // Configure tool-specific properties.
+    "customizations": {
+      // Configure properties specific to VS Code.
+      "vscode": {
+        "settings": {
+          "editor.insertSpaces": true,
+          "editor.tabSize": 2,
+          "terminal.integrated.tabStopWidth": 2,
+          "files.eol": "\n",
+          "remote.downloadExtensionsLocally": true,
+          "terminal.integrated.defaultProfile.linux": "zsh",
+          "terminal.integrated.profiles.linux": {
+            "bash": {
+              "icon": "terminal-bash",
+              "path": "bash"
+            },
+            "tmux": {
+              "icon": "terminal-tmux",
+              "path": "tmux"
+            },
+            "zsh": {
+              "args": ["--login", "--interactive"],
+              "icon": "squirrel",
+              "path": "/usr/bin/zsh"
+            }
+          }
+        },
+        "extensions": [
+          "ms-vscode-remote.vscode-remote-extensionpack",
+          "VisualStudioExptTeam.vscodeintellicode",
+          "tintinweb.vscode-inline-bookmarks",
+          "EditorConfig.EditorConfig",
+          "streetsidesoftware.code-spell-checker",
+          "eamodio.gitlens",
+          "github.copilot",
+          "GitHub.vscode-github-actions",
+          "davidanson.vscode-markdownlint",
+          "bierner.markdown-mermaid",
+          "christian-kohler.npm-intellisense",
+          "ms-vscode.vscode-typescript-next",
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode"
+        ]
+      }
+    },
+  
+    "containerEnv": {
+      "SHELL": "/usr/bin/zsh",
+      "GIT_SSL_NO_VERIFY": "1",
+      "NODE_EXTRA_CA_CERTS": "/usr/local/share/ca-certificates/proxychain.pem",
+      "INSTALL_PACKAGES": "build-essential, vim, neovim, jq, git-all, gh, npm"
+    },
+  
+    // Extra mount point.
+    "mounts": [
+      "source=${localEnv:HOME}${localEnv:USERPROFILE}/Projects,target=/mnt/workspace,type=bind,consistency=cached",
+      "source=${localEnv:HOME}${localEnv:USERPROFILE}/.certs,target=/usr/local/share/ca-certificates,type=bind,consistency=cached,ro"
+    ],
+  
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+  
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+  
+    // Override the default `postCreateCommand` to run after container creation.
+    "postStartCommand": "command -v npm >/dev/null 2>&1 && npm run | grep -q setup && npm run setup",
+    "postAttachCommand": "if test -f yarn.lock; then yarn install --immutable; elif test -f package-lock.json; then npm clean-install; elif test -f package.json; then npm install; fi"
+  }
