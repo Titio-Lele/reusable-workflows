@@ -62,10 +62,10 @@
     },
   
     // Extra mount point.
-    "mounts": [
-      "source=${localEnv:HOME}${localEnv:USERPROFILE}/Projects,target=/mnt/workspace,type=bind,consistency=cached",
-      "source=${localEnv:HOME}${localEnv:USERPROFILE}/.certs,target=/usr/local/share/ca-certificates,type=bind,consistency=cached,ro"
-    ],
+    // "mounts": [
+    //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/Projects,target=/mnt/workspace,type=bind,consistency=cached",
+    //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/.certs,target=/usr/local/share/ca-certificates,type=bind,consistency=cached,ro"
+    // ],
   
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],

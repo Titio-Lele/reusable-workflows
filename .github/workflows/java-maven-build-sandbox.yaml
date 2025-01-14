@@ -1,0 +1,32 @@
+name: Java Maven Build
+
+on:
+  workflow_call:
+    inputs:
+      enabled-fortify:
+        required: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+
+    - name: Validate Dependencies
+      run: mvn dependency:go-offline
+        
+    - name: Validate Maven project
+      run: mvn validate
+
+    - name: Conditional Fortify Scan
+      if: ${{ inputs.enabled-fortify }}
+      run: echo "Running Fortify scan..."
+      
